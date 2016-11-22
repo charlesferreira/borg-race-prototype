@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ShipController : MonoBehaviour {
+public class ShipMovement : MonoBehaviour {
 
     const float RotationSensitivityMultiplier = 1000f;
 
@@ -18,13 +18,6 @@ public class ShipController : MonoBehaviour {
     public float speedDamping = 0.001f;
 
     float MaxMovementSpeedSqr { get { return maxMovementSpeed * maxMovementSpeed; } }
-
-    float LeftVert { get { return Input.GetKey("w") ? 1f : 0f; } }
-    float LeftHorz { get { return Input.GetKey("d") ? 1f : Input.GetKey("a") ? -1f : 0f; } }
-
-    float RightHorz { get { return Input.GetKey("right") ? 1f : Input.GetKey("left") ? -1f : 0f; } }
-    float RightVert { get { return Input.GetKey("down") ? 1f : Input.GetKey("up") ? -1f : 0f; } }
-
 
     Rigidbody rb;
     Vector2 targetRotation;
@@ -63,8 +56,8 @@ public class ShipController : MonoBehaviour {
     }
 
     private void Move() {
-        var strafe = LeftHorz * strafePower * transform.right;
-        var thrust = LeftVert * thrustPower * transform.forward;
+        var strafe = Input.GetAxis("Horizontal") * strafePower * transform.right;
+        var thrust = Input.GetAxis("Vertical") * thrustPower * transform.forward;
         rb.AddForce((strafe + thrust) * Time.fixedDeltaTime);
     }
 }
